@@ -12,6 +12,7 @@ import { useTheme } from '../../hooks/useTheme';
 import { Spacing } from '../../constants/theme';
 import { computePeriodStats, sessionsInLastDays } from '../../utils/stats';
 import { computeGoalProgress } from '../../utils/goalProgress';
+import { formatRank } from '../../utils/rank';
 
 export default function GoalsScreen() {
   const { sessions, goals, addGoal, removeGoal } = useData();
@@ -19,7 +20,7 @@ export default function GoalsScreen() {
   const [modalVisible, setModalVisible] = useState(false);
 
   const recentStats = computePeriodStats(sessionsInLastDays(sessions, 30));
-  const latestRank = sessions[0]?.rank;
+  const latestRank = sessions[0] ? formatRank(sessions[0]) : undefined;
 
   const handleDelete = (id: number, label: string) => {
     Alert.alert('Supprimer l’objectif', label, [
@@ -79,7 +80,7 @@ export default function GoalsScreen() {
                     </ThemedText>
                   ) : (
                     <>
-                      <ProgressBar progress={progress.progress} tintColor={colors.text} />
+                      <ProgressBar progress={progress.progress} />
                       <ThemedText variant="footnote" color="secondary">
                         {progress.currentLabel} / {goal.targetValue}
                         {goal.metric === 'winRate' || goal.metric === 'hsPercent' ? '%' : ''}

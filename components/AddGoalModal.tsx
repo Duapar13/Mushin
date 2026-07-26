@@ -93,7 +93,7 @@ export function AddGoalModal({ visible, onClose, onSubmit }: Props) {
                 <Input
                   value={targetLabel}
                   onChangeText={setTargetLabel}
-                  placeholder="ex : Elite Gold Master / 18 000"
+                  placeholder="ex : Faceit Level 8 ou Premier 20 000"
                 />
               </FormRow>
             ) : (

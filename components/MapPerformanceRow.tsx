@@ -1,12 +1,10 @@
 import { View } from 'react-native';
 import { ThemedText } from './ThemedText';
 import { ProgressBar } from './ProgressBar';
-import { useTheme } from '../hooks/useTheme';
 import { MapStats } from '../types';
 import { Spacing } from '../constants/theme';
 
 export function MapPerformanceRow({ stats }: { stats: MapStats }) {
-  const { colors } = useTheme();
   return (
     <View style={{ gap: 4, paddingVertical: Spacing.xs }}>
       <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
@@ -17,7 +15,7 @@ export function MapPerformanceRow({ stats }: { stats: MapStats }) {
           {stats.winRate.toFixed(0)}% WR · {stats.kd.toFixed(2)} K/D · {stats.sessionCount} sess.
         </ThemedText>
       </View>
-      <ProgressBar progress={stats.winRate / 100} tintColor={colors.text} />
+      <ProgressBar progress={stats.winRate / 100} />
     </View>
   );
 }

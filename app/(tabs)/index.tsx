@@ -21,6 +21,7 @@ import {
   sessionsInLastDays,
 } from '../../utils/stats';
 import { computeGoalProgress } from '../../utils/goalProgress';
+import { formatRank } from '../../utils/rank';
 
 function delta(current: number, previous: number): { text: string; positive: boolean } {
   if (previous === 0 && current === 0) return { text: '—', positive: false };
@@ -57,7 +58,7 @@ export default function DashboardScreen() {
           <MushinWordmark size={44} />
 
           <Card style={{ flexDirection: 'row', alignItems: 'center', gap: Spacing.md }}>
-            <Ionicons name="flame" size={32} color={colors.text} />
+            <Ionicons name="flame" size={32} color={colors.accent} />
             <View>
               <ThemedText variant="title1" weight="700">
                 {streak} {streak > 1 ? 'jours' : 'jour'}
@@ -109,7 +110,11 @@ export default function DashboardScreen() {
               </ThemedText>
               <Card style={{ gap: Spacing.md }}>
                 {goals.slice(0, 3).map((goal) => {
-                  const progress = computeGoalProgress(goal, recentStats30, sessions[0]?.rank);
+                  const progress = computeGoalProgress(
+                    goal,
+                    recentStats30,
+                    sessions[0] ? formatRank(sessions[0]) : undefined
+                  );
                   return (
                     <View key={goal.id} style={{ gap: 4 }}>
                       <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
@@ -123,7 +128,7 @@ export default function DashboardScreen() {
                         </ThemedText>
                       </View>
                       {goal.metric !== 'rank' && (
-                        <ProgressBar progress={progress.progress} tintColor={colors.text} />
+                        <ProgressBar progress={progress.progress} />
                       )}
                     </View>
                   );
@@ -146,14 +151,14 @@ export default function DashboardScreen() {
                     data={lineData(weekly.map((w) => w.stats.winRate))}
                     height={100}
                     thickness={2}
-                    color={colors.chartLine}
+                    color={colors.accent}
                     hideRules
                     hideYAxisText
                     hideAxesAndRules
                     hideDataPoints={false}
-                    dataPointsColor={colors.chartLine}
+                    dataPointsColor={colors.accent}
                     dataPointsRadius={3}
-                    startFillColor={colors.chartLine}
+                    startFillColor={colors.accent}
                     startOpacity={0.08}
                     endOpacity={0}
                     areaChart
@@ -172,14 +177,14 @@ export default function DashboardScreen() {
                     data={lineData(weekly.map((w) => w.stats.kd))}
                     height={100}
                     thickness={2}
-                    color={colors.chartLine}
+                    color={colors.accent}
                     hideRules
                     hideYAxisText
                     hideAxesAndRules
-                    dataPointsColor={colors.chartLine}
+                    dataPointsColor={colors.accent}
                     dataPointsRadius={3}
                     areaChart
-                    startFillColor={colors.chartLine}
+                    startFillColor={colors.accent}
                     startOpacity={0.08}
                     endOpacity={0}
                     xAxisColor="transparent"
@@ -197,14 +202,14 @@ export default function DashboardScreen() {
                     data={lineData(weekly.map((w) => w.stats.avgAdr))}
                     height={100}
                     thickness={2}
-                    color={colors.chartLine}
+                    color={colors.accent}
                     hideRules
                     hideYAxisText
                     hideAxesAndRules
-                    dataPointsColor={colors.chartLine}
+                    dataPointsColor={colors.accent}
                     dataPointsRadius={3}
                     areaChart
-                    startFillColor={colors.chartLine}
+                    startFillColor={colors.accent}
                     startOpacity={0.08}
                     endOpacity={0}
                     xAxisColor="transparent"
@@ -222,14 +227,14 @@ export default function DashboardScreen() {
                     data={lineData(weekly.map((w) => w.stats.avgHsPercent))}
                     height={100}
                     thickness={2}
-                    color={colors.chartLine}
+                    color={colors.accent}
                     hideRules
                     hideYAxisText
                     hideAxesAndRules
-                    dataPointsColor={colors.chartLine}
+                    dataPointsColor={colors.accent}
                     dataPointsRadius={3}
                     areaChart
-                    startFillColor={colors.chartLine}
+                    startFillColor={colors.accent}
                     startOpacity={0.08}
                     endOpacity={0}
                     xAxisColor="transparent"

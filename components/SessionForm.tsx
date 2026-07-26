@@ -1,17 +1,17 @@
 import { useState } from 'react';
 import { Platform, ScrollView, View } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { CS2_MAPS, MatchResult, Session, SessionInput } from '../types';
+import { CS2_MAPS, MatchResult, RankSystem, Session, SessionInput } from '../types';
+import { RANK_SYSTEM_LABELS } from '../utils/rank';
 import { FormRow } from './FormRow';
 import { Input } from './Input';
 import { Button } from './Button';
 import { SegmentedControl } from './SegmentedControl';
 import { ChipSelector } from './ChipSelector';
-import { ScaleSelector } from './ScaleSelector';
+import { FeelingSlider } from './FeelingSlider';
 import { ThemedText } from './ThemedText';
 import { Card } from './Card';
 import { Spacing } from '../constants/theme';
-import { useTheme } from '../hooks/useTheme';
 
 interface Props {
   initial?: Session;
@@ -26,8 +26,14 @@ const RESULT_OPTIONS: { label: string; value: MatchResult }[] = [
   { label: 'Égalité', value: 'draw' },
 ];
 
+const RANK_SYSTEM_OPTIONS: { label: string; value: RankSystem }[] = [
+  { label: RANK_SYSTEM_LABELS.faceit, value: 'faceit' },
+  { label: RANK_SYSTEM_LABELS.premier, value: 'premier' },
+];
+
+const FACEIT_LEVELS = Array.from({ length: 10 }, (_, i) => String(i + 1));
+
 export function SessionForm({ initial, onSubmit, submitLabel, onDelete }: Props) {
-  const { colors } = useTheme();
   const [playedAt, setPlayedAt] = useState(
     initial ? new Date(initial.playedAt) : new Date()
   );
@@ -43,14 +49,21 @@ export function SessionForm({ initial, onSubmit, submitLabel, onDelete }: Props)
   const [assists, setAssists] = useState(String(initial?.assists ?? ''));
   const [adr, setAdr] = useState(String(initial?.adr ?? ''));
   const [hsPercent, setHsPercent] = useState(String(initial?.hsPercent ?? ''));
-  const [rank, setRank] = useState(initial?.rank ?? '');
+  const [rankSystem, setRankSystem] = useState<RankSystem>(
+    initial?.rankSystem ?? 'premier'
+  );
+  const [faceitLevel, setFaceitLevel] = useState(
+    initial?.rankSystem === 'faceit' ? String(initial.rankValue) : '5'
+  );
+  const [premierElo, setPremierElo] = useState(
+    initial?.rankSystem === 'premier' && initial.rankValue > 0
+      ? String(initial.rankValue)
+      : ''
+  );
   const [durationMinutes, setDurationMinutes] = useState(
     String(initial?.durationMinutes ?? '')
   );
-  const [focusBefore, setFocusBefore] = useState(initial?.focusBefore ?? 3);
-  const [focusAfter, setFocusAfter] = useState(initial?.focusAfter ?? 3);
-  const [tiltBefore, setTiltBefore] = useState(initial?.tiltBefore ?? 1);
-  const [tiltAfter, setTiltAfter] = useState(initial?.tiltAfter ?? 1);
+  const [feeling, setFeeling] = useState(initial?.feeling ?? 5);
   const [sleepHours, setSleepHours] = useState(
     String(initial?.sleepHours ?? '7')
   );
@@ -75,12 +88,10 @@ export function SessionForm({ initial, onSubmit, submitLabel, onDelete }: Props)
         assists: Math.round(num(assists)),
         adr: num(adr),
         hsPercent: num(hsPercent),
-        rank: rank.trim(),
+        rankSystem,
+        rankValue: rankSystem === 'faceit' ? num(faceitLevel) : num(premierElo),
         durationMinutes: Math.round(num(durationMinutes)),
-        focusBefore,
-        focusAfter,
-        tiltBefore,
-        tiltAfter,
+        feeling,
         sleepHours: num(sleepHours),
         notes: notes.trim(),
       };
@@ -213,13 +224,31 @@ export function SessionForm({ initial, onSubmit, submitLabel, onDelete }: Props)
             />
           </FormRow>
         </View>
-        <FormRow label="Rang / ELO actuel">
-          <Input
-            value={rank}
-            onChangeText={setRank}
-            placeholder="ex : Elite Gold Master / 15 000"
+        <FormRow label="Système de rang">
+          <SegmentedControl
+            options={RANK_SYSTEM_OPTIONS}
+            value={rankSystem}
+            onChange={setRankSystem}
           />
         </FormRow>
+        {rankSystem === 'faceit' ? (
+          <FormRow label="Niveau Faceit">
+            <ChipSelector
+              options={FACEIT_LEVELS}
+              value={faceitLevel}
+              onChange={setFaceitLevel}
+            />
+          </FormRow>
+        ) : (
+          <FormRow label="ELO Premier">
+            <Input
+              keyboardType="number-pad"
+              value={premierElo}
+              onChangeText={setPremierElo}
+              placeholder="ex : 15000"
+            />
+          </FormRow>
+        )}
         <FormRow label="Durée de la session (minutes)">
           <Input
             keyboardType="number-pad"
@@ -230,22 +259,9 @@ export function SessionForm({ initial, onSubmit, submitLabel, onDelete }: Props)
         </FormRow>
       </Card>
 
-      <Card style={{ gap: 0 }}>
-        <ThemedText variant="headline" style={{ marginBottom: Spacing.sm }}>
-          État mental
-        </ThemedText>
-        <FormRow label="Focus avant (1-5)">
-          <ScaleSelector value={focusBefore} onChange={setFocusBefore} />
-        </FormRow>
-        <FormRow label="Focus après (1-5)">
-          <ScaleSelector value={focusAfter} onChange={setFocusAfter} />
-        </FormRow>
-        <FormRow label="Tilt avant (1-5)">
-          <ScaleSelector value={tiltBefore} onChange={setTiltBefore} />
-        </FormRow>
-        <FormRow label="Tilt après (1-5)">
-          <ScaleSelector value={tiltAfter} onChange={setTiltAfter} />
-        </FormRow>
+      <Card style={{ gap: Spacing.md }}>
+        <ThemedText variant="headline">Ressenti</ThemedText>
+        <FeelingSlider value={feeling} onChange={setFeeling} />
         <FormRow label="Heures de sommeil avant la session">
           <Input
             keyboardType="decimal-pad"

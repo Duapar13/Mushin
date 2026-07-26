@@ -26,7 +26,7 @@ export function ProgressBar({ progress, height = 8, tintColor }: Props) {
           width: `${clamped * 100}%`,
           height: '100%',
           borderRadius: Radius.pill,
-          backgroundColor: tintColor ?? colors.text,
+          backgroundColor: tintColor ?? colors.accent,
         }}
       />
     </View>

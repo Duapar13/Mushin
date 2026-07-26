@@ -10,10 +10,13 @@ export const CS2_MAPS = [
   'Train',
   'Overpass',
   'Vertigo',
+  'Cache',
   'Autre',
 ] as const;
 
 export type Cs2Map = (typeof CS2_MAPS)[number];
+
+export type RankSystem = 'faceit' | 'premier';
 
 export interface Session {
   id: number;
@@ -25,12 +28,10 @@ export interface Session {
   assists: number;
   adr: number;
   hsPercent: number;
-  rank: string;
+  rankSystem: RankSystem;
+  rankValue: number; // Faceit: level 1-10 · Premier: ELO
   durationMinutes: number;
-  focusBefore: number; // 1-5
-  focusAfter: number; // 1-5
-  tiltBefore: number; // 1-5
-  tiltAfter: number; // 1-5
+  feeling: number; // ressenti général sur la game, 1-10
   sleepHours: number;
   notes: string;
   createdAt: string;

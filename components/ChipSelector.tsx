@@ -27,13 +27,13 @@ export function ChipSelector({ options, value, onChange }: Props) {
               paddingHorizontal: 14,
               paddingVertical: 8,
               borderRadius: Radius.pill,
-              backgroundColor: selected ? colors.text : colors.fill,
+              backgroundColor: selected ? colors.accent : colors.fill,
             }}
           >
             <ThemedText
               variant="subhead"
               weight="600"
-              style={{ color: selected ? colors.background : colors.text }}
+              style={{ color: selected ? '#FFFFFF' : colors.text }}
             >
               {opt}
             </ThemedText>

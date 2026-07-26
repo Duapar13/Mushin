@@ -68,7 +68,7 @@ export function ScatterPlot({ points, xLabel, yLabel, height = 200 }: Props) {
             cx={scaleX(p.x)}
             cy={scaleY(p.y)}
             r={4}
-            fill={colors.text}
+            fill={colors.accent}
             opacity={0.75}
           />
         ))}

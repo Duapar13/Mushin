@@ -25,10 +25,10 @@ export async function insertSession(
   const now = new Date().toISOString();
   const result = await db.runAsync(
     `INSERT INTO sessions
-      (playedAt, map, result, kills, deaths, assists, adr, hsPercent, rank,
-       durationMinutes, focusBefore, focusAfter, tiltBefore, tiltAfter,
-       sleepHours, notes, createdAt, updatedAt)
-     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      (playedAt, map, result, kills, deaths, assists, adr, hsPercent,
+       rankSystem, rankValue, durationMinutes, feeling, sleepHours, notes,
+       createdAt, updatedAt)
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
     input.playedAt,
     input.map,
     input.result,
@@ -37,12 +37,10 @@ export async function insertSession(
     input.assists,
     input.adr,
     input.hsPercent,
-    input.rank,
+    input.rankSystem,
+    input.rankValue,
     input.durationMinutes,
-    input.focusBefore,
-    input.focusAfter,
-    input.tiltBefore,
-    input.tiltAfter,
+    input.feeling,
     input.sleepHours,
     input.notes,
     now,
@@ -60,9 +58,9 @@ export async function updateSession(
   await db.runAsync(
     `UPDATE sessions SET
       playedAt = ?, map = ?, result = ?, kills = ?, deaths = ?, assists = ?,
-      adr = ?, hsPercent = ?, rank = ?, durationMinutes = ?, focusBefore = ?,
-      focusAfter = ?, tiltBefore = ?, tiltAfter = ?, sleepHours = ?,
-      notes = ?, updatedAt = ?
+      adr = ?, hsPercent = ?, rankSystem = ?, rankValue = ?,
+      durationMinutes = ?, feeling = ?, sleepHours = ?, notes = ?,
+      updatedAt = ?
      WHERE id = ?`,
     input.playedAt,
     input.map,
@@ -72,12 +70,10 @@ export async function updateSession(
     input.assists,
     input.adr,
     input.hsPercent,
-    input.rank,
+    input.rankSystem,
+    input.rankValue,
     input.durationMinutes,
-    input.focusBefore,
-    input.focusAfter,
-    input.tiltBefore,
-    input.tiltAfter,
+    input.feeling,
     input.sleepHours,
     input.notes,
     now,

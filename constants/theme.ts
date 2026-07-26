@@ -12,14 +12,10 @@ const lightPalette = {
   fill: '#F2F2F7',
   fillSecondary: '#E8E8ED',
   overlay: 'rgba(0,0,0,0.4)',
-  success: '#1C1C1E',
-  danger: '#3A3A3C',
   accent: RED_ACCENT,
   tabBarBackground: '#F9F9F9',
   tabBarInactive: '#9A9A9E',
-  tabBarActive: '#000000',
-  chartLine: '#000000',
-  chartGrid: '#E5E5EA',
+  tabBarActive: RED_ACCENT,
 };
 
 const darkPalette = {
@@ -34,14 +30,10 @@ const darkPalette = {
   fill: '#1C1C1E',
   fillSecondary: '#2C2C2E',
   overlay: 'rgba(0,0,0,0.6)',
-  success: '#F2F2F2',
-  danger: '#8E8E93',
   accent: RED_ACCENT,
   tabBarBackground: '#0B0B0C',
   tabBarInactive: '#6E6E73',
-  tabBarActive: '#FFFFFF',
-  chartLine: '#FFFFFF',
-  chartGrid: '#2C2C2E',
+  tabBarActive: RED_ACCENT,
 };
 
 export const Palettes = {
