@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Alert, Pressable, ScrollView, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
+import { MushinWordmark } from '../../components/MushinWordmark';
 import { ThemedText } from '../../components/ThemedText';
 import { ThemedView } from '../../components/ThemedView';
 import { Card } from '../../components/Card';
@@ -41,9 +42,9 @@ export default function GoalsScreen() {
             paddingTop: Spacing.sm,
           }}
         >
-          <ThemedText variant="largeTitle">Objectifs</ThemedText>
+          <MushinWordmark size={36} />
           <Pressable onPress={() => setModalVisible(true)}>
-            <Ionicons name="add-circle" size={30} color={colors.text} />
+            <Ionicons name="add-circle" size={30} color={colors.accent} />
           </Pressable>
         </View>
 

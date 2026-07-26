@@ -7,7 +7,7 @@ import { Input } from './Input';
 import { Button } from './Button';
 import { SegmentedControl } from './SegmentedControl';
 import { ChipSelector } from './ChipSelector';
-import { FeelingSlider } from './FeelingSlider';
+import { LabeledSlider } from './LabeledSlider';
 import { ThemedText } from './ThemedText';
 import { Card } from './Card';
 import { Spacing } from '../constants/theme';
@@ -55,15 +55,30 @@ export function SessionForm({ initial, onSubmit, submitLabel, onDelete }: Props)
       : ''
   );
   const [feeling, setFeeling] = useState(initial?.feeling ?? 5);
-  const [sleepHours, setSleepHours] = useState(
-    String(initial?.sleepHours ?? '7')
-  );
+  const [sleepHours, setSleepHours] = useState(initial?.sleepHours ?? 7);
   const [notes, setNotes] = useState(initial?.notes ?? '');
   const [submitting, setSubmitting] = useState(false);
 
   const num = (v: string) => {
     const n = parseFloat(v.replace(',', '.'));
     return Number.isFinite(n) ? n : 0;
+  };
+
+  const resetForm = () => {
+    setMap(CS2_MAPS[0]);
+    setCustomMap('');
+    setResult('win');
+    setKills('');
+    setDeaths('');
+    setAssists('');
+    setAdr('');
+    setHsPercent('');
+    setRankSystem('premier');
+    setFaceitLevel('5');
+    setPremierElo('');
+    setFeeling(5);
+    setSleepHours(7);
+    setNotes('');
   };
 
   const handleSubmit = async () => {
@@ -82,10 +97,13 @@ export function SessionForm({ initial, onSubmit, submitLabel, onDelete }: Props)
         rankSystem,
         rankValue: rankSystem === 'faceit' ? num(faceitLevel) : num(premierElo),
         feeling,
-        sleepHours: num(sleepHours),
+        sleepHours,
         notes: notes.trim(),
       };
       await onSubmit(input);
+      // Editing keeps the field values on screen; only a fresh "new session"
+      // entry clears back to defaults so another one can be logged right away.
+      if (!initial) resetForm();
     } finally {
       setSubmitting(false);
     }
@@ -196,17 +214,26 @@ export function SessionForm({ initial, onSubmit, submitLabel, onDelete }: Props)
         )}
       </Card>
 
-      <Card style={{ gap: Spacing.md }}>
+      <Card style={{ gap: Spacing.lg }}>
         <ThemedText variant="headline">Ressenti</ThemedText>
-        <FeelingSlider value={feeling} onChange={setFeeling} />
-        <FormRow label="Heures de sommeil avant la session">
-          <Input
-            keyboardType="decimal-pad"
-            value={sleepHours}
-            onChangeText={setSleepHours}
-            placeholder="7"
-          />
-        </FormRow>
+        <LabeledSlider
+          label="Ressenti général"
+          value={feeling}
+          onChange={(v) => setFeeling(Math.round(v))}
+          minimumValue={1}
+          maximumValue={10}
+          step={1}
+          formatValue={(v) => `${v}/10`}
+        />
+        <LabeledSlider
+          label="Sommeil avant la session"
+          value={sleepHours}
+          onChange={setSleepHours}
+          minimumValue={0}
+          maximumValue={12}
+          step={0.5}
+          formatValue={(v) => `${v} h`}
+        />
       </Card>
 
       <Card style={{ gap: Spacing.sm }}>

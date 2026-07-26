@@ -4,29 +4,42 @@ import { ThemedText } from './ThemedText';
 import { useTheme } from '../hooks/useTheme';
 
 interface Props {
+  label: string;
   value: number;
   onChange: (value: number) => void;
+  minimumValue: number;
+  maximumValue: number;
+  step: number;
+  formatValue: (value: number) => string;
 }
 
-export function FeelingSlider({ value, onChange }: Props) {
+export function LabeledSlider({
+  label,
+  value,
+  onChange,
+  minimumValue,
+  maximumValue,
+  step,
+  formatValue,
+}: Props) {
   const { colors } = useTheme();
 
   return (
     <View style={{ gap: 4 }}>
       <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
         <ThemedText variant="subhead" color="secondary">
-          Ressenti général
+          {label}
         </ThemedText>
         <ThemedText variant="subhead" weight="700" color="accent">
-          {value}/10
+          {formatValue(value)}
         </ThemedText>
       </View>
       <Slider
         value={value}
-        onValueChange={(v) => onChange(Math.round(v))}
-        minimumValue={1}
-        maximumValue={10}
-        step={1}
+        onValueChange={onChange}
+        minimumValue={minimumValue}
+        maximumValue={maximumValue}
+        step={step}
         minimumTrackTintColor={colors.accent}
         maximumTrackTintColor={colors.fillSecondary}
         thumbTintColor={colors.accent}

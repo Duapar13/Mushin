@@ -2,6 +2,7 @@ import { Pressable, SectionList, View } from 'react-native';
 import { router } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
+import { MushinWordmark } from '../../components/MushinWordmark';
 import { ThemedText } from '../../components/ThemedText';
 import { ThemedView } from '../../components/ThemedView';
 import { useData } from '../../context/DataContext';
@@ -82,12 +83,15 @@ export default function HistoryScreen() {
   return (
     <ThemedView variant="grouped" style={{ flex: 1 }}>
       <SafeAreaView edges={['top']} style={{ flex: 1 }}>
-        <ThemedText
-          variant="largeTitle"
-          style={{ paddingHorizontal: Spacing.lg, paddingTop: Spacing.sm, paddingBottom: Spacing.sm }}
+        <View
+          style={{
+            paddingHorizontal: Spacing.lg,
+            paddingTop: Spacing.sm,
+            paddingBottom: Spacing.sm,
+          }}
         >
-          Historique
-        </ThemedText>
+          <MushinWordmark size={36} />
+        </View>
         {sessions.length === 0 ? (
           <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', gap: 8 }}>
             <ThemedText color="secondary">Aucune session enregistrée.</ThemedText>

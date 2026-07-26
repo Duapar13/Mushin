@@ -55,7 +55,7 @@ export default function DashboardScreen() {
     <ThemedView variant="grouped" style={{ flex: 1 }}>
       <SafeAreaView edges={['top']} style={{ flex: 1 }}>
         <ScrollView contentContainerStyle={{ padding: Spacing.lg, gap: Spacing.lg, paddingBottom: Spacing.xxl }}>
-          <MushinWordmark size={44} />
+          <MushinWordmark size={36} />
 
           <Card style={{ flexDirection: 'row', alignItems: 'center', gap: Spacing.md }}>
             <Ionicons name="flame" size={32} color={colors.accent} />

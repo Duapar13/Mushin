@@ -21,25 +21,30 @@ export function Button({ title, variant = 'filled', style, ...rest }: Props) {
     );
   }
 
-  const backgroundColor =
-    variant === 'destructive' ? colors.accent : colors.text;
-  const textColor = variant === 'destructive' ? '#FFFFFF' : colors.background;
+  const isDestructive = variant === 'destructive';
 
   return (
     <Pressable
       style={(state) => [
         {
-          backgroundColor,
+          backgroundColor: isDestructive ? 'transparent' : colors.accent,
           borderRadius: Radius.md,
           paddingVertical: Spacing.md,
           alignItems: 'center',
           opacity: state.pressed ? 0.7 : 1,
+          ...(isDestructive
+            ? { borderWidth: 1, borderColor: colors.accent }
+            : null),
         },
         typeof style === 'function' ? style(state) : style,
       ]}
       {...rest}
     >
-      <ThemedText variant="body" weight="600" style={{ color: textColor }}>
+      <ThemedText
+        variant="body"
+        weight="600"
+        style={{ color: isDestructive ? colors.accent : '#FFFFFF' }}
+      >
         {title}
       </ThemedText>
     </Pressable>
