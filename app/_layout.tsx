@@ -7,6 +7,7 @@ import { useFonts, DancingScript_700Bold } from '@expo-google-fonts/dancing-scri
 import { DB_NAME, migrateDb } from '../db/schema';
 import { DataProvider } from '../context/DataContext';
 import { NotificationSync } from '../components/NotificationSync';
+import { BackupSync } from '../components/BackupSync';
 import { AppShell } from '../components/AppShell';
 import { ErrorBoundary } from '../components/ErrorBoundary';
 import { useTheme } from '../hooks/useTheme';
@@ -31,6 +32,7 @@ export default function RootLayout() {
         <SQLiteProvider databaseName={DB_NAME} onInit={migrateDb}>
           <DataProvider>
             <NotificationSync />
+            <BackupSync />
             <AppShell />
           </DataProvider>
         </SQLiteProvider>

@@ -3,6 +3,7 @@ import { router } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { MushinWordmark } from '../../components/MushinWordmark';
+import { BackupControls } from '../../components/BackupControls';
 import { ThemedText } from '../../components/ThemedText';
 import { ThemedView } from '../../components/ThemedView';
 import { useData } from '../../context/DataContext';
@@ -93,8 +94,11 @@ export default function HistoryScreen() {
           <MushinWordmark size={36} />
         </View>
         {sessions.length === 0 ? (
-          <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', gap: 8 }}>
-            <ThemedText color="secondary">Aucune session enregistrée.</ThemedText>
+          <View style={{ flex: 1 }}>
+            <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', gap: 8 }}>
+              <ThemedText color="secondary">Aucune session enregistrée.</ThemedText>
+            </View>
+            <BackupControls />
           </View>
         ) : (
           <SectionList
@@ -115,6 +119,7 @@ export default function HistoryScreen() {
                 </ThemedText>
               </View>
             )}
+            ListFooterComponent={<BackupControls />}
             contentContainerStyle={{ paddingBottom: Spacing.xl }}
           />
         )}
