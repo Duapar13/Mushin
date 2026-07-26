@@ -56,10 +56,10 @@ function SessionRow({ session }: { session: Session }) {
           borderRadius: Radius.pill,
           backgroundColor:
             session.result === 'win'
-              ? colors.text
+              ? colors.positive
               : session.result === 'loss'
-                ? colors.textTertiary
-                : colors.textSecondary,
+                ? colors.accent
+                : colors.textTertiary,
         }}
       />
       <View style={{ flex: 1, gap: 2 }}>

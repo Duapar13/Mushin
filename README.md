@@ -21,8 +21,8 @@ Application de tracking d'habitudes de jeu pour **Counter-Strike 2**, pensée po
 
 ## Fonctionnalités
 
-- **Dashboard** — résumé 7 jours vs période précédente, streak, progression des objectifs, graphiques (win rate / K/D / ADR / HS% par semaine, corrélation sommeil × K/D, performance par map)
-- **Nouvelle session** — formulaire complet (map, résultat, K/D/A, ADR, HS%, rang Faceit ou Premier, ressenti /10, sommeil, notes)
+- **Dashboard** — résumé 7 jours vs période précédente, streak, progression des objectifs, graphiques (win rate / K/D / ADR / HS% par semaine, performance par map)
+- **Nouvelle session** — formulaire complet (map, résultat, K/D/A, ADR, HS%, rang Faceit ou Premier, notes)
 - **Historique** — sessions groupées par date, éditables et supprimables
 - **Objectifs** — cibles personnalisées (win rate, K/D, ADR, HS%, rang) avec barres de progression
 - Rappel quotidien local si aucune session n'a encore été loggée
@@ -44,8 +44,6 @@ Tout est stocké **localement sur le téléphone**, dans une base **SQLite** (`e
 | `adr`, `hsPercent` | réel | |
 | `rankSystem` | texte | `faceit` ou `premier` |
 | `rankValue` | réel | niveau Faceit (1-10) ou ELO Premier |
-| `feeling` | entier | ressenti général sur la game, 1-10 |
-| `sleepHours` | réel | heures de sommeil avant la session |
 | `notes` | texte | libre, optionnel |
 | `createdAt`, `updatedAt` | texte (ISO) | horodatage d'enregistrement |
 

@@ -1,4 +1,5 @@
 export const RED_ACCENT = '#A32D2D';
+export const GREEN_ACCENT = '#2F7A4A';
 
 const lightPalette = {
   background: '#FFFFFF',
@@ -13,6 +14,7 @@ const lightPalette = {
   fillSecondary: '#E8E8ED',
   overlay: 'rgba(0,0,0,0.4)',
   accent: RED_ACCENT,
+  positive: GREEN_ACCENT,
   tabBarBackground: '#F9F9F9',
   tabBarInactive: '#9A9A9E',
   tabBarActive: RED_ACCENT,
@@ -31,6 +33,7 @@ const darkPalette = {
   fillSecondary: '#2C2C2E',
   overlay: 'rgba(0,0,0,0.6)',
   accent: RED_ACCENT,
+  positive: GREEN_ACCENT,
   tabBarBackground: '#0B0B0C',
   tabBarInactive: '#6E6E73',
   tabBarActive: RED_ACCENT,

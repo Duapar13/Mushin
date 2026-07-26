@@ -8,7 +8,6 @@ import { ThemedView } from '../../components/ThemedView';
 import { Card } from '../../components/Card';
 import { StatTile } from '../../components/StatTile';
 import { ProgressBar } from '../../components/ProgressBar';
-import { ScatterPlot } from '../../components/ScatterPlot';
 import { MapPerformanceRow } from '../../components/MapPerformanceRow';
 import { useData } from '../../context/DataContext';
 import { useTheme } from '../../hooks/useTheme';
@@ -42,11 +41,6 @@ export default function DashboardScreen() {
   const weekly = computeWeeklySeries(sessions, 8);
   const mapStats = computeMapStats(sessions).slice(0, 5);
   const recentStats30 = computePeriodStats(sessionsInLastDays(sessions, 30));
-
-  const scatterPoints = sessionsInLastDays(sessions, 60).map((s) => ({
-    x: s.sleepHours,
-    y: s.deaths > 0 ? s.kills / s.deaths : s.kills,
-  }));
 
   const lineData = (values: number[]) =>
     values.map((v) => ({ value: Number.isFinite(v) ? v : 0 }));
@@ -247,15 +241,6 @@ export default function DashboardScreen() {
               </Card>
             </View>
           )}
-
-          <View>
-            <ThemedText variant="headline" style={{ marginBottom: Spacing.sm }}>
-              Sommeil vs K/D
-            </ThemedText>
-            <Card>
-              <ScatterPlot points={scatterPoints} xLabel="heures de sommeil" yLabel="K/D" />
-            </Card>
-          </View>
 
           {mapStats.length > 0 && (
             <View>

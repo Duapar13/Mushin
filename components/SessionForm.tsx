@@ -7,7 +7,6 @@ import { Input } from './Input';
 import { Button } from './Button';
 import { SegmentedControl } from './SegmentedControl';
 import { ChipSelector } from './ChipSelector';
-import { LabeledSlider } from './LabeledSlider';
 import { ThemedText } from './ThemedText';
 import { Card } from './Card';
 import { Spacing } from '../constants/theme';
@@ -54,8 +53,6 @@ export function SessionForm({ initial, onSubmit, submitLabel, onDelete }: Props)
       ? String(initial.rankValue)
       : ''
   );
-  const [feeling, setFeeling] = useState(initial?.feeling ?? 5);
-  const [sleepHours, setSleepHours] = useState(initial?.sleepHours ?? 7);
   const [notes, setNotes] = useState(initial?.notes ?? '');
   const [submitting, setSubmitting] = useState(false);
 
@@ -76,8 +73,6 @@ export function SessionForm({ initial, onSubmit, submitLabel, onDelete }: Props)
     setRankSystem('premier');
     setFaceitLevel('5');
     setPremierElo('');
-    setFeeling(5);
-    setSleepHours(7);
     setNotes('');
   };
 
@@ -96,8 +91,6 @@ export function SessionForm({ initial, onSubmit, submitLabel, onDelete }: Props)
         hsPercent: num(hsPercent),
         rankSystem,
         rankValue: rankSystem === 'faceit' ? num(faceitLevel) : num(premierElo),
-        feeling,
-        sleepHours,
         notes: notes.trim(),
       };
       await onSubmit(input);
@@ -212,28 +205,6 @@ export function SessionForm({ initial, onSubmit, submitLabel, onDelete }: Props)
             />
           </FormRow>
         )}
-      </Card>
-
-      <Card style={{ gap: Spacing.lg }}>
-        <ThemedText variant="headline">Ressenti</ThemedText>
-        <LabeledSlider
-          label="Ressenti général"
-          value={feeling}
-          onChange={(v) => setFeeling(Math.round(v))}
-          minimumValue={1}
-          maximumValue={10}
-          step={1}
-          formatValue={(v) => `${v}/10`}
-        />
-        <LabeledSlider
-          label="Sommeil avant la session"
-          value={sleepHours}
-          onChange={setSleepHours}
-          minimumValue={0}
-          maximumValue={12}
-          step={0.5}
-          formatValue={(v) => `${v} h`}
-        />
       </Card>
 
       <Card style={{ gap: Spacing.sm }}>

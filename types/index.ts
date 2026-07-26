@@ -30,8 +30,6 @@ export interface Session {
   hsPercent: number;
   rankSystem: RankSystem;
   rankValue: number; // Faceit: level 1-10 · Premier: ELO
-  feeling: number; // ressenti général sur la game, 1-10
-  sleepHours: number;
   notes: string;
   createdAt: string;
   updatedAt: string;

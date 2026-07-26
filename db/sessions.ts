@@ -26,9 +26,8 @@ export async function insertSession(
   const result = await db.runAsync(
     `INSERT INTO sessions
       (playedAt, map, result, kills, deaths, assists, adr, hsPercent,
-       rankSystem, rankValue, feeling, sleepHours, notes,
-       createdAt, updatedAt)
-     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+       rankSystem, rankValue, notes, createdAt, updatedAt)
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
     input.playedAt,
     input.map,
     input.result,
@@ -39,8 +38,6 @@ export async function insertSession(
     input.hsPercent,
     input.rankSystem,
     input.rankValue,
-    input.feeling,
-    input.sleepHours,
     input.notes,
     now,
     now
@@ -58,7 +55,7 @@ export async function updateSession(
     `UPDATE sessions SET
       playedAt = ?, map = ?, result = ?, kills = ?, deaths = ?, assists = ?,
       adr = ?, hsPercent = ?, rankSystem = ?, rankValue = ?,
-      feeling = ?, sleepHours = ?, notes = ?, updatedAt = ?
+      notes = ?, updatedAt = ?
      WHERE id = ?`,
     input.playedAt,
     input.map,
@@ -70,8 +67,6 @@ export async function updateSession(
     input.hsPercent,
     input.rankSystem,
     input.rankValue,
-    input.feeling,
-    input.sleepHours,
     input.notes,
     now,
     id
