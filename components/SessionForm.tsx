@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import { Platform, ScrollView, View } from 'react-native';
-import DateTimePicker from '@react-native-community/datetimepicker';
+import { ScrollView, View } from 'react-native';
 import { CS2_MAPS, MatchResult, RankSystem, Session, SessionInput } from '../types';
 import { RANK_SYSTEM_LABELS } from '../utils/rank';
 import { FormRow } from './FormRow';
@@ -34,11 +33,6 @@ const RANK_SYSTEM_OPTIONS: { label: string; value: RankSystem }[] = [
 const FACEIT_LEVELS = Array.from({ length: 10 }, (_, i) => String(i + 1));
 
 export function SessionForm({ initial, onSubmit, submitLabel, onDelete }: Props) {
-  const [playedAt, setPlayedAt] = useState(
-    initial ? new Date(initial.playedAt) : new Date()
-  );
-  const [showDatePicker, setShowDatePicker] = useState(false);
-  const [showTimePicker, setShowTimePicker] = useState(false);
   const [map, setMap] = useState(initial?.map ?? CS2_MAPS[0]);
   const [customMap, setCustomMap] = useState(
     initial && !CS2_MAPS.includes(initial.map as any) ? initial.map : ''
@@ -60,9 +54,6 @@ export function SessionForm({ initial, onSubmit, submitLabel, onDelete }: Props)
       ? String(initial.rankValue)
       : ''
   );
-  const [durationMinutes, setDurationMinutes] = useState(
-    String(initial?.durationMinutes ?? '')
-  );
   const [feeling, setFeeling] = useState(initial?.feeling ?? 5);
   const [sleepHours, setSleepHours] = useState(
     String(initial?.sleepHours ?? '7')
@@ -80,7 +71,7 @@ export function SessionForm({ initial, onSubmit, submitLabel, onDelete }: Props)
     try {
       const finalMap = map === 'Autre' ? customMap.trim() || 'Autre' : map;
       const input: SessionInput = {
-        playedAt: playedAt.toISOString(),
+        playedAt: initial ? initial.playedAt : new Date().toISOString(),
         map: finalMap,
         result,
         kills: Math.round(num(kills)),
@@ -90,7 +81,6 @@ export function SessionForm({ initial, onSubmit, submitLabel, onDelete }: Props)
         hsPercent: num(hsPercent),
         rankSystem,
         rankValue: rankSystem === 'faceit' ? num(faceitLevel) : num(premierElo),
-        durationMinutes: Math.round(num(durationMinutes)),
         feeling,
         sleepHours: num(sleepHours),
         notes: notes.trim(),
@@ -110,51 +100,6 @@ export function SessionForm({ initial, onSubmit, submitLabel, onDelete }: Props)
         <ThemedText variant="headline" style={{ marginBottom: Spacing.sm }}>
           Session
         </ThemedText>
-
-        <FormRow label="Date">
-          <Button
-            title={playedAt.toLocaleDateString('fr-FR', {
-              weekday: 'long',
-              day: 'numeric',
-              month: 'long',
-            })}
-            variant="plain"
-            onPress={() => setShowDatePicker(true)}
-          />
-          {showDatePicker && (
-            <DateTimePicker
-              value={playedAt}
-              mode="date"
-              display={Platform.OS === 'ios' ? 'inline' : 'default'}
-              onChange={(_, date) => {
-                setShowDatePicker(Platform.OS === 'ios');
-                if (date) setPlayedAt(date);
-              }}
-            />
-          )}
-        </FormRow>
-
-        <FormRow label="Heure">
-          <Button
-            title={playedAt.toLocaleTimeString('fr-FR', {
-              hour: '2-digit',
-              minute: '2-digit',
-            })}
-            variant="plain"
-            onPress={() => setShowTimePicker(true)}
-          />
-          {showTimePicker && (
-            <DateTimePicker
-              value={playedAt}
-              mode="time"
-              display="default"
-              onChange={(_, date) => {
-                setShowTimePicker(false);
-                if (date) setPlayedAt(date);
-              }}
-            />
-          )}
-        </FormRow>
 
         <FormRow label="Map">
           <ChipSelector options={CS2_MAPS} value={map} onChange={setMap} />
@@ -249,14 +194,6 @@ export function SessionForm({ initial, onSubmit, submitLabel, onDelete }: Props)
             />
           </FormRow>
         )}
-        <FormRow label="Durée de la session (minutes)">
-          <Input
-            keyboardType="number-pad"
-            value={durationMinutes}
-            onChangeText={setDurationMinutes}
-            placeholder="0"
-          />
-        </FormRow>
       </Card>
 
       <Card style={{ gap: Spacing.md }}>

@@ -1,7 +1,7 @@
 import type { SQLiteDatabase } from 'expo-sqlite';
 
 export const DB_NAME = 'mushin.db';
-const CURRENT_VERSION = 2;
+const CURRENT_VERSION = 3;
 
 export async function migrateDb(db: SQLiteDatabase) {
   const row = await db.getFirstAsync<{ user_version: number }>(
@@ -10,11 +10,11 @@ export async function migrateDb(db: SQLiteDatabase) {
   const currentVersion = row?.user_version ?? 0;
   if (currentVersion >= CURRENT_VERSION) return;
 
-  // Pre-release schema change (v1 -> v2): rank became structured
-  // (Faceit/Premier) and the focus/tilt before-after scales were
-  // replaced by a single post-game "ressenti" score. No real user
+  // Pre-release schema changes: rank became structured (Faceit/Premier),
+  // focus/tilt before-after scales became a single "ressenti" score, and
+  // date/time + session duration were dropped from the form. No real user
   // data predates this, so the old sessions table is simply replaced.
-  if (currentVersion > 0 && currentVersion < 2) {
+  if (currentVersion > 0 && currentVersion < CURRENT_VERSION) {
     await db.execAsync('DROP TABLE IF EXISTS sessions;');
   }
 
@@ -33,7 +33,6 @@ export async function migrateDb(db: SQLiteDatabase) {
       hsPercent REAL NOT NULL DEFAULT 0,
       rankSystem TEXT NOT NULL DEFAULT 'premier',
       rankValue REAL NOT NULL DEFAULT 0,
-      durationMinutes INTEGER NOT NULL DEFAULT 0,
       feeling INTEGER NOT NULL DEFAULT 5,
       sleepHours REAL NOT NULL DEFAULT 7,
       notes TEXT NOT NULL DEFAULT '',

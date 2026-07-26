@@ -35,10 +35,14 @@ export function SegmentedControl<T extends string>({
               paddingVertical: 8,
               borderRadius: Radius.sm - 2,
               alignItems: 'center',
-              backgroundColor: selected ? colors.card : 'transparent',
+              backgroundColor: selected ? colors.accent : 'transparent',
             }}
           >
-            <ThemedText variant="subhead" weight={selected ? '600' : '400'}>
+            <ThemedText
+              variant="subhead"
+              weight={selected ? '600' : '400'}
+              style={{ color: selected ? '#FFFFFF' : colors.text }}
+            >
               {opt.label}
             </ThemedText>
           </Pressable>
