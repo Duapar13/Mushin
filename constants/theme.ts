@@ -1,0 +1,81 @@
+export const RED_ACCENT = '#A32D2D';
+
+const lightPalette = {
+  background: '#FFFFFF',
+  groupedBackground: '#F2F2F7',
+  card: '#FFFFFF',
+  border: '#E5E5EA',
+  text: '#000000',
+  textSecondary: '#6B6B70',
+  textTertiary: '#AEAEB2',
+  separator: '#D1D1D6',
+  fill: '#F2F2F7',
+  fillSecondary: '#E8E8ED',
+  overlay: 'rgba(0,0,0,0.4)',
+  success: '#1C1C1E',
+  danger: '#3A3A3C',
+  accent: RED_ACCENT,
+  tabBarBackground: '#F9F9F9',
+  tabBarInactive: '#9A9A9E',
+  tabBarActive: '#000000',
+  chartLine: '#000000',
+  chartGrid: '#E5E5EA',
+};
+
+const darkPalette = {
+  background: '#000000',
+  groupedBackground: '#000000',
+  card: '#1C1C1E',
+  border: '#2C2C2E',
+  text: '#FFFFFF',
+  textSecondary: '#98989F',
+  textTertiary: '#5C5C5E',
+  separator: '#38383A',
+  fill: '#1C1C1E',
+  fillSecondary: '#2C2C2E',
+  overlay: 'rgba(0,0,0,0.6)',
+  success: '#F2F2F2',
+  danger: '#8E8E93',
+  accent: RED_ACCENT,
+  tabBarBackground: '#0B0B0C',
+  tabBarInactive: '#6E6E73',
+  tabBarActive: '#FFFFFF',
+  chartLine: '#FFFFFF',
+  chartGrid: '#2C2C2E',
+};
+
+export const Palettes = {
+  light: lightPalette,
+  dark: darkPalette,
+};
+
+export type ThemeColors = typeof lightPalette;
+
+export const Radius = {
+  sm: 8,
+  md: 12,
+  lg: 16,
+  xl: 20,
+  pill: 999,
+};
+
+export const Spacing = {
+  xs: 4,
+  sm: 8,
+  md: 12,
+  lg: 16,
+  xl: 24,
+  xxl: 32,
+};
+
+export const FontSizes = {
+  caption: 12,
+  footnote: 13,
+  subhead: 15,
+  body: 17,
+  headline: 17,
+  title3: 20,
+  title2: 22,
+  title1: 28,
+  largeTitle: 34,
+};
